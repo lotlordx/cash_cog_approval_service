@@ -15,7 +15,7 @@ class CurrencyController(Resource):
         """
             This function handles the get requests made
             to this controller
-        :return:
+        :return: json response
         """
         response = self._services.get_all()
         response.status_code = 200

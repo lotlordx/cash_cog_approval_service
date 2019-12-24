@@ -43,6 +43,12 @@ services:
       - redis
       - db
       - kafka
+  approval_service_be:
+    build: ./client_fe
+    depends_on:
+      - approval_service_be
+    ports:
+      - "3500:3500"
 volumes:
   postgres_data:
   server_be_logs:

@@ -2,7 +2,7 @@ from flask_restful import Api
 from flask_cors import CORS
 
 from app.employee_app.controller import EmployeeController
-from settings.constants import ENVIROMENT
+from settings.constants import ENVIROMENT, APP_PORT
 from app import create_app, make_celery
 from app.transaction_app.controller import TransactionListController, TransactionController, \
     TransactionAnalyticsController
@@ -25,4 +25,4 @@ if __name__ == "__main__":
     from tools.celery.tasks import kafka_producer
     kafka_producer.delay()
 
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=APP_PORT)

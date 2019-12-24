@@ -4,8 +4,16 @@ from app.currency_app.models import CurrencyModel
 
 
 class TransactionModel(db.Model):
+    """
+    This represents the transactions Model / transaction_model table.
+    Field attributes declared here represents , corresponding
+    column names and attributes in the db.
 
-    __tablename__ = 'transaction_model'
+    This model would serve as a visual feel to the  client. Approvals
+    and other crud operations would be permissible here
+    """
+
+    __tablename__ = "transaction_model"
 
     uuid = db.Column(db.String(100), unique=True, primary_key=True)
     amount = db.Column(db.String(200), index=True)
@@ -15,7 +23,7 @@ class TransactionModel(db.Model):
     employee_id = db.Column(db.String(200), db.ForeignKey('employee_model.uuid'))
     employee = db.relationship("EmployeeModel", backref="emp_x")
     status = db.Column(db.Boolean, default=True)
-    approval_status = db.Column(db.String(10), default='pending')
+    approval_status = db.Column(db.String(10), default="pending")
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime, onupdate=db.func.current_timestamp())
 
@@ -28,6 +36,9 @@ class TransactionModel(db.Model):
         self.created_at = created_at
 
     def save(self):
+        """
+        This function saves a transactionModel object to the db
+        """
         employee = EmployeeModel(**self.employee_details)
         currency = CurrencyModel(self.currency_code)
 
@@ -53,12 +64,15 @@ class TransactionModel(db.Model):
         except Exception as ex:
             db.session.rollback
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
-
     def roll_back(self):
+        """
+        This function rolls back a commit state in the db
+        """
         db.session.rollback()
 
     def commit(self):
+        """
+        This function commits record to the active session
+        :return: None
+        """
         db.session.commit()

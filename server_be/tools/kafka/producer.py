@@ -18,6 +18,7 @@ class KafkaProducerBase:
         This function connects to the kafka broker
         :return:
         """
+
         _producer = None
         try:
             _producer = KafkaProducer(value_serializer=lambda v: json.dumps(v).encode('utf-8'),
@@ -34,6 +35,7 @@ class KafkaProducerBase:
         streaming service
         :return: yields a json object
         """
+
         try:
             resp = requests.get(self.url, stream=True)
             for line in resp.iter_lines():
@@ -48,6 +50,7 @@ class KafkaProducerBase:
         This function publishes streamed feeds to the appropriate kafka topic
         :return:
         """
+
         _producer = self.connect_kafka_producer()
         resource = self.stream_service()
 

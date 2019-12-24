@@ -9,6 +9,10 @@ from .models import TransactionModel
 
 
 class TransactionServices:
+    """
+    This Class Handles all Currency
+    related business Logics.
+    """
 
     def __init__(self):
         self.schema = TransactionSchema()
@@ -16,9 +20,20 @@ class TransactionServices:
         self.currency_model = CurrencyModel
         self.employee_model = EmployeeModel
         self.page_no = 1
-        self.page_size = 100
+        self.page_size = 20
 
-    def get_all_records(self, request) -> List[TransactionModel]:
+    def get_all_records(self, request: object) -> List[TransactionModel]:
+        """
+        This function returns all transaction records in the most optimised
+        way. joinedload was imployed here to enabled preloading on foreign key
+        related objects, this alone optimises the query by almost 70%.
+
+        Records fethched here are paginated and also accepted params for extra
+        filtering.
+        :param request: request details
+        :return: json tramsaction records
+        """
+
         search_conditions = []
         page_no = request.args.get('page_no', self.page_no)
         page_size = request.args.get('page_size', self.page_size)
@@ -50,12 +65,26 @@ class TransactionServices:
         return jsonify({"page_no": page_no, "page_size": page_size, "result_count": result_count, "transaction_list": result})
 
     def create_record(self, request: object) -> TransactionModel:
+        """
+        This function creates a transaction record in the transaction_model
+        table
+        :param request: request details
+        :return: json tramsaction records
+        """
+
         record = self.service_model(**request.data)
         record.save()
         result = self.schema.dump(record)
         return jsonify({'transaction': result})
 
     def update_record(self, request: object, transaction_id: str) -> TransactionModel:
+        """
+        This function handles changes thats to be made to a tansaction
+        record in te db.
+        :param request:
+        :param transaction_id: transaction record id to effect changes on
+        :return: json tramsaction record
+        """
         data = request.get_json()
         transaction_record_from_db = self.service_model.query.filter_by(uuid=transaction_id).scalar()
         if transaction_record_from_db is None:
@@ -76,7 +105,13 @@ class TransactionServices:
         transaction_record_from_db.commit()
         return jsonify({"status": True, "message":"record updated",'transaction': self.schema.dump(transaction_record_from_db)})
 
-    def delete_record(self, request: object, transaction_id: str) -> TransactionModel:
+    def delete_record(self, transaction_id: str) -> TransactionModel:
+        """
+        This function handles the soft - deletion of a record in the
+        transaction_model table
+        :param transaction_id: transaction id record to be soft deleted
+        :return: json tramsaction record
+        """
         transaction_record_from_db = self.service_model.query.filter_by(uuid=transaction_id).scalar()
 
         if transaction_record_from_db is None:
@@ -88,6 +123,11 @@ class TransactionServices:
             {"status": True, "message": "record deleted", 'transaction': self.schema.dump(transaction_record_from_db)})
 
     def get_analytics_record(self) -> object:
+        """
+        This function get analytics report thats to be feed on the clients
+        dashboard
+        :return: json object
+        """
         current_time = datetime.datetime.utcnow().date()
         query_result = self.service_model.query.with_entities(self.service_model.approval_status, self.service_model.created_at).filter_by(status=True)
         pending_approval = query_result.filter_by(approval_status='pending').count()

@@ -59,7 +59,7 @@ class TransactionController(Resource):
             to this controller
         :return: json response
         """
-        response = self._services.delete_record(request, trans_id)
+        response = self._services.delete_record(trans_id)
         response.status_code = 200
         return response
 

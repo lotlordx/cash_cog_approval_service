@@ -13,7 +13,7 @@ class CurrencyController(Resource):
 
     def get(self) -> object:
         """
-            This function handles the get request made
+            This function handles the get requests made
             to this controller
         :return:
         """

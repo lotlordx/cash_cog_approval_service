@@ -21,6 +21,7 @@ class CurrencyServices:
         upon query
         :return json currencyModel object:
         """
+
         query_result = self.service_model.query.with_entities(self.service_model.id, self.service_model.currency_code)
         schema = CurrencySchema(many=True)
         result = schema.dump(query_result)

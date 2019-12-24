@@ -11,13 +11,13 @@ ma = Marshmallow()
 migrate = Migrate()
 
 
-def create_app(config: str) -> object:
+def create_app(config: str) -> FlaskAPI:
     """
     This function instanciates and returns a flask api object,
     embedding other required services withing.
 
     :param config: Represents the enviroment the app is to run on (eg development, testing, production)
-    :return: flaskapp
+    :return: FlaskApI
     """
     global app
     from app import app_loader

@@ -3,5 +3,11 @@ from app import ma
 
 
 class EmployeeSchema(ma.ModelSchema):
-        class Meta:
-            model = EmployeeModel
+    """
+    This CLass Handles the serialization and deserialization
+    of the employeeModel instance. Flask Marshamallow lib calls the
+    ModelSchema Class, which is  Inherited,  to perform this
+    action.
+    """
+    class Meta:
+        model = EmployeeModel

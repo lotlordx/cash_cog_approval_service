@@ -26,6 +26,6 @@ class EmployeeServices:
                                                               self.service_model.last_name)
         schema = EmployeeSchema(many=True)
         result = schema.dump(query_result)
-        return jsonify({'employee_list': result})
+        return jsonify({"employee_list": result})
 
 

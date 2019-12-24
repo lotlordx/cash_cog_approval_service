@@ -5,3 +5,4 @@ celery*
 .git
 __pycache__
 .idea
+supervisord*

@@ -11,7 +11,12 @@ class CurrencyController(Resource):
     def __init__(self):
         self._services = CurrencyServices()
 
-    def get(self):
+    def get(self) -> object:
+        """
+            This function handles the get request made
+            to this controller
+        :return:
+        """
         response = self._services.get_all()
         response.status_code = 200
         return response

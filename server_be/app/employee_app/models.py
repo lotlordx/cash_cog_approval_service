@@ -8,7 +8,7 @@ class EmployeeModel(db.Model):
     column names and attributes in the db.
     """
 
-    __tablename__ = 'employee_model'
+    __tablename__ = "employee_model"
 
     uuid = db.Column(db.String(200), primary_key=True)
     first_name = db.Column(db.String(200))
@@ -23,6 +23,7 @@ class EmployeeModel(db.Model):
         """
         This function saves an employeeModel object to the db
         """
+
         try:
             db.session.add(self)
             db.session.flush()
@@ -34,5 +35,6 @@ class EmployeeModel(db.Model):
         """
         This function rolls back a commit state in the db
         """
+
         db.session.rollback()
 

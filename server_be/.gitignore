@@ -1,0 +1,7 @@
+venv
+celery*
+.env
+.pytest_cache
+.git
+__pycache__
+.idea

@@ -9,5 +9,6 @@ class EmployeeSchema(ma.ModelSchema):
     ModelSchema Class, which is  Inherited,  to perform this
     action.
     """
+
     class Meta:
         model = EmployeeModel

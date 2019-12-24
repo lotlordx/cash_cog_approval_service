@@ -136,5 +136,5 @@ class TransactionServices:
         employee_query_result = self.employee_model.query.count()
 
         return jsonify({"result_count": result_count, "pending_approval": pending_approval, "today_count": today_count,
-                        "employee_count": employee_query_result}
+                        "employee_count": employee_query_result})
 

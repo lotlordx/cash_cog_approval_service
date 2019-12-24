@@ -6,3 +6,4 @@ celery*
 __pycache__
 .idea
 supervisord*
+celerybeat*

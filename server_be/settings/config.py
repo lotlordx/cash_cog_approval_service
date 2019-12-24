@@ -4,44 +4,59 @@ from .constants import SQLALCHEMY_DATABASE_URI, CELERY_BROKER_URL, CELERY_RESULT
 
 
 class BaseConfig:
+    """
+    Base Configuration Class
+    """
     DEBUG = True
     TESTING = False
     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI
     CELERY_RESULT_BACKEND = CELERY_RESULT_BACKEND
     CELERY_BROKER_URL = CELERY_BROKER_URL
     CSRF_ENABLE = True
-    CELERY_IMPORTS = ('tools.celery.tasks')
+    CELERY_IMPORTS = ("tools.celery.tasks")
     CELERY_TASK_RESULT_EXPIRES = 30
-    CELERY_TIMEZONE = 'UTC'
+    CELERY_TIMEZONE = "UTC"
 
-    CELERY_ACCEPT_CONTENT = ['json', 'msgpack', 'yaml']
-    CELERY_TASK_SERIALIZER = 'json'
-    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_ACCEPT_CONTENT = ["json", "msgpack", "yaml"]
+    CELERY_TASK_SERIALIZER = "json"
+    CELERY_RESULT_SERIALIZER = "json"
 
     CELERYBEAT_SCHEDULE = {
-        'perform_task': {
-            'task': 'tools.celery.tasks.publish_to_db',
+        "perform_task": {
+            "task": "tools.celery.tasks.publish_to_db",
             # Every minute
-            'schedule': crontab(minute="*"),
+            "schedule": crontab(minute="*"),
         },
 
     }
 
 
 class ProductionConfig(BaseConfig):
+    """
+    Production Configuration Class
+    """
     DEBUG = False
 
 
 class DevelopmentConfig(BaseConfig):
+    """
+    Development Configuration Class
+    """
     pass
 
 
 class StagingConfig(BaseConfig):
+    """
+    Staging Configuration Class
+    """
     DEBUG = False
     TESTING = False
 
 
 class TestingConfig(BaseConfig):
+    """
+    Test Configuration Class
+    """
     SQLALCHEMY_DATABASE_URI = "mysql://root:password@localhost/test_db"
     TESTING = True
 

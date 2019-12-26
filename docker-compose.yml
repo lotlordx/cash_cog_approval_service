@@ -47,7 +47,9 @@ services:
   approval_service_client:
     build: ./client_fe
     ports:
-      - "3500:3500"
+      - "8080:8080"
+    depends_on:
+      - approval_service_server
 volumes:
   postgres_data:
   server_be_logs:

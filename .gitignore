@@ -1,0 +1,9 @@
+server_be/venv
+server_be/celery*
+server_be/.env
+server_be/.pytest_cache
+server_be/.git
+server_be/__pycache__
+server_be/.idea
+server_be/supervisord*
+server_be/celerybeat*
